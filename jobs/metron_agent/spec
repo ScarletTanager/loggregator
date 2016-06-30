@@ -65,6 +65,8 @@ properties:
     description: "Availability zone where this agent is running"
   metron_agent.deployment:
     description: "Name of deployment (added as tag on all outgoing metrics)"
+  metron_agent.label:
+    default: "potato"
 
   metron_agent.tcp.batching_buffer_bytes:
     description: "The number of bytes which can be buffered prior to TCP writes (applies to TLS over TCP)"

@@ -54,7 +54,7 @@ type Finder struct {
 	label  string
 }
 
-func NewFinder(adapter StoreAdapter, legacyPort int, protocols []string, preferredDopplerZone string, logger *gosteno.Logger) *Finder {
+func NewFinder(adapter StoreAdapter, legacyPort int, protocols []string, preferredDopplerZone string, logger *gosteno.Logger, label string) *Finder {
 	return &Finder{
 		metaEndpoints:        make(map[string][]string),
 		legacyEndpoints:      make(map[string]string),
@@ -64,7 +64,7 @@ func NewFinder(adapter StoreAdapter, legacyPort int, protocols []string, preferr
 		legacyPort:           legacyPort,
 		events:               make(chan Event, 10),
 		logger:               logger,
-		label:                "potato",
+		label:                label,
 	}
 }
 

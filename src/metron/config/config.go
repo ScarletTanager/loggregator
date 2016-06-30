@@ -57,6 +57,7 @@ type Config struct {
 	Zone       string
 	Job        string
 	Index      string
+	Label      string
 
 	IncomingUDPPort int
 
