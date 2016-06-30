@@ -13,6 +13,7 @@ import (
 type DopplerMeta struct {
 	Version   uint32   `json:"version"`
 	Endpoints []string `json:"endpoints"`
+	Label     string   `json:"label"`
 }
 
 const dopplerMetaVersion = 1
@@ -74,12 +75,14 @@ func AnnounceLegacy(localIP string, ttl time.Duration, config *config.Config, st
 }
 
 func buildDopplerMeta(localIp string, config *config.Config) ([]byte, error) {
+	label := "potato"
 	udpAddr := fmt.Sprintf("udp://%s:%d", localIp, config.IncomingUDPPort)
 	tcpAddr := fmt.Sprintf("tcp://%s:%d", localIp, config.IncomingTCPPort)
 	wsAddr := fmt.Sprintf("ws://%s:%d", localIp, config.OutgoingPort)
 	dopplerMeta := DopplerMeta{
 		Version:   dopplerMetaVersion,
 		Endpoints: []string{udpAddr, tcpAddr, wsAddr},
+		Label:     label,
 	}
 
 	if config.EnableTLSTransport {

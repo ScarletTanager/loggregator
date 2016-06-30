@@ -51,6 +51,7 @@ type Finder struct {
 
 	events chan Event
 	logger *gosteno.Logger
+	label  string
 }
 
 func NewFinder(adapter StoreAdapter, legacyPort int, protocols []string, preferredDopplerZone string, logger *gosteno.Logger) *Finder {
@@ -63,6 +64,7 @@ func NewFinder(adapter StoreAdapter, legacyPort int, protocols []string, preferr
 		legacyPort:           legacyPort,
 		events:               make(chan Event, 10),
 		logger:               logger,
+		label:                "potato",
 	}
 }
 
@@ -291,6 +293,12 @@ func (f *Finder) parseMetaValue(leafValue []byte) (interface{}, error) {
 	var data map[string]interface{}
 	if err := json.Unmarshal(leafValue, &data); err != nil {
 		return nil, err
+	}
+
+	labelInterface := data["label"].(interface{})
+	label := labelInterface.(string)
+	if label != f.label {
+		return nil, nil
 	}
 
 	// json.Unmarshal always unmarshals to a []interface{}, so copy to a []string.
